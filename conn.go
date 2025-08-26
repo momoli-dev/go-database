@@ -2,8 +2,10 @@ package database
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/stdlib"
 	pgxgeom "github.com/twpayne/pgx-geom"
 )
 
@@ -55,4 +57,9 @@ func (c *Conn) Pool() *pgxpool.Pool {
 // Ping checks the database connection.
 func (c *Conn) Ping(ctx context.Context) error {
 	return c.pool.Ping(ctx)
+}
+
+// Conn returns a *sql.DB instance for compatibility with database/sql package, acting as a connection handle.
+func (c *Conn) Handle() *sql.DB {
+	return stdlib.OpenDBFromPool(c.pool)
 }
