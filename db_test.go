@@ -7,6 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
+	"github.com/xinoip/go-database"
 )
 
 // testDB is the global shared test database instance.
@@ -70,4 +71,17 @@ func RunWithDB(t *testing.T, f func(connURL string)) {
 		testDB = NewTestDB(t)
 	}
 	f(testDB.ConnURL())
+}
+
+// RunWithConn helper opens a test database connection, runs f, and closes the connection at the end.
+func RunWithConn(t *testing.T, f func(conn *database.Conn)) {
+	RunWithDB(t, func(connURL string) {
+		conn, err := database.NewConn(context.Background(), &database.ConnParams{
+			Addr:       connURL,
+			HasPostgis: true,
+		})
+		require.NoError(t, err)
+		require.NotNil(t, conn)
+		f(conn)
+	})
 }
