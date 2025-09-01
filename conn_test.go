@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/momoli-dev/go-database"
 	"github.com/stretchr/testify/assert"
-	"github.com/xinoip/go-database"
 )
 
 func TestNewConnWithPostgis_OK(t *testing.T) {

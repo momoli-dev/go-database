@@ -5,9 +5,9 @@ import (
 	"log"
 	"testing"
 
+	"github.com/momoli-dev/go-database"
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
-	"github.com/xinoip/go-database"
 )
 
 // testDB is the global shared test database instance.
